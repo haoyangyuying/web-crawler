@@ -1,6 +1,7 @@
-from flask import Flask, request
+from flask import Flask, request, send_from_directory
 import requests
 import re
+import os
 
 app = Flask(__name__)
 
@@ -42,7 +43,12 @@ def index():
 
     for i, url in enumerate(unique_urls):
         # Add an anchor tag around the image with a link to the original size
-        html += f'<a href="{url}"><img src="{url}" alt="product-image"></a>'
+        html += f'<a href="{url}"><img src="/images/{i}.jpg" alt="product-image"></a>'
+
+        # Download the image and save it to the static/images directory
+        response = requests.get(url)
+        with open(f"static/images/{i}.jpg", "wb") as f:
+            f.write(response.content)
 
         # Close the current row and start a new one after every third image
         if (i + 1) % 3 == 0:
@@ -76,5 +82,14 @@ def index():
     # Return the HTML with embedded images and input form
     return html
 
+# Serve static files from the 'static' directory
+@app.route('/<path:path>')
+def serve_static(path):
+    return send_from_directory('static', path)
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    # Use environment variables to get the port and debug mode
+    port = int(os.environ.get('PORT', 5000))
+    debug = os.environ.get('DEBUG', False)
+
+    app.run(host='0.0.0.0', port=port, debug=debug)
