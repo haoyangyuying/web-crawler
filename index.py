@@ -43,16 +43,7 @@ def index():
 
     for i, url in enumerate(unique_urls):
         # Add an anchor tag around the image with a link to the original size
-        html += f'<a href="{url}"><img src="/images/{i}.jpg" alt="product-image"></a>'
-
-        # Download the image and save it to the static/images directory
-        response = requests.get(url)
-        with open(f"static/images/{i}.jpg", "wb") as f:
-            f.write(response.content)
-
-        # Close the current row and start a new one after every third image
-        if (i + 1) % 3 == 0:
-            html += '<div class="clear"></div>'
+        html += f'<a href="{url}"><img src="{url}" alt="product-image"></a>'
 
     html += '</div>'
 
@@ -72,9 +63,6 @@ def index():
     }
     .image-grid img:hover {
         opacity: 0.7;
-    }
-    .clear {
-        clear: both;
     }
     </style>
     """
