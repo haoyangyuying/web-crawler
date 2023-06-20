@@ -32,24 +32,67 @@ def index():
 
     # Generate HTML with embedded images using the unique image URLs
     html = """
-    <form method="post">
-        <label for="asin">Enter ASIN:</label>
-        <input type="text" id="asin" name="asin">
-        <button type="submit">Scrape</button>
-    </form>
+    <div class="container">
 
-    <div class="image-grid">
+        <form method="post">
+            <label for="asin">Enter ASIN:</label>
+            <input type="text" id="asin" name="asin" size="30" placeholder="Enter an ASIN...">
+            <button type="submit">Scrape</button>
+        </form>
+
+        <div class="example-asins">
+            <p>Example ASINs: B0BLBSQ6KR, B07CQK19RP, B00PADOYP4</p>
+        </div>
+
+        <div class="image-grid">
     """
 
     for i, url in enumerate(unique_urls):
         # Add an anchor tag around the image with a link to the original size
         html += f'<a href="{url}"><img src="{url}" alt="product-image"></a>'
 
-    html += '</div>'
+    html += '</div></div>'
 
-    # Add CSS styles to format the image grid and clickable images
+    # Add CSS styles to format the container, input form, and clickable images
     html += """
     <style>
+    .container {
+        padding: 15px;
+        margin: 0 auto;
+        max-width: 600px;
+    }
+    form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    label {
+        font-size: 16px;
+        margin-right: 10px;
+    }
+    input[type="text"] {
+        border: none;
+        border-radius: 6px;
+        padding: 10px;
+        font-size: 16px;
+        width: 60%;
+    }
+    button[type="submit"] {
+        border: none;
+        background-color: #ddd;
+        color: black;
+        padding: 10px 20px;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    button[type="submit"]:hover {
+        background-color: #ccc;
+    }
+    .example-asins {
+        margin-bottom: 10px;
+    }
     .image-grid {
         display: flex;
         flex-wrap: wrap;
