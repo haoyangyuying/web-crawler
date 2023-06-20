@@ -41,7 +41,7 @@ def index():
         </form>
 
         <div class="example-asins">
-            <p>Example ASINs: B0BLBSQ6KR, B07CQK19RP, B00PADOYP4</p>
+            <p>Example ASINs: B0BFR3K492, B09V25VFNK, B0BQY4VSSD</p>
         </div>
 
         <div class="image-grid">
