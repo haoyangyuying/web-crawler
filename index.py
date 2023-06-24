@@ -240,7 +240,7 @@ def reviews():
         </div>
         """
 
-@app.route('/'test.py)
+@app.route('/')
 def index():
     return redirect('/images')
 
