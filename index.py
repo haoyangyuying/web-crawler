@@ -22,7 +22,7 @@ def index():
         page_source = response.text
 
         # Use regex to find all image URLs that match the pattern "https://.*?SL1500_\.jpg"
-        image_urls = re.findall(r"https://.*?SL1500_\.jpg", page_source)
+        image_urls = re.findall(r"https://.*?(?:1500_|1200_|1000_)\.jpg", page_source)[:30]
 
         # Loop through each URL and add to the list if it is not already present
         for url in image_urls:
@@ -56,57 +56,98 @@ def index():
     # Add CSS styles to format the container, input form, and clickable images
     html += """
     <style>
-    .container {
-        padding: 15px;
-        margin: 0 auto;
-        max-width: 600px;
-    }
-    form {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-bottom: 20px;
-    }
-    label {
-        font-size: 16px;
-        margin-right: 10px;
-    }
-    input[type="text"] {
-        border: none;
-        border-radius: 6px;
-        padding: 10px;
-        font-size: 16px;
-        width: 60%;
-    }
-    button[type="submit"] {
-        border: none;
-        background-color: #ddd;
-        color: black;
-        padding: 10px 20px;
-        border-radius: 6px;
-        font-size: 16px;
-        cursor: pointer;
-    }
-    button[type="submit"]:hover {
-        background-color: #ccc;
-    }
-    .example-asins {
-        margin-bottom: 10px;
-    }
-    .image-grid {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-    .image-grid img {
-        max-width: 200px;
-        margin: 10px;
-        cursor: pointer;
-        transition: opacity 0.2s ease-in-out;
-    }
-    .image-grid img:hover {
-        opacity: 0.7;
-    }
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            margin: 0 auto;
+            max-width: 600px;
+        }
+
+        form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        input[type="text"] {
+            border: none;
+            border-radius: 6px;
+            padding: 10px;
+            font-size: 16px;
+            width: 60%;
+        }
+
+        button[type="submit"] {
+            border: none;
+            background-color: #ddd;
+            color: black;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #ccc;
+        }
+
+        .example-asins {
+            margin-bottom: 10px;
+        }
+
+        .image-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 0 -5px;
+        }
+
+        .image-grid img {
+            max-width: 100%;
+            height: auto;
+            margin: 10px 5px;
+            cursor: pointer;
+            transition: opacity 0.2s ease-in-out;
+        }
+
+        .image-grid img:hover {
+            opacity: 0.7;
+        }
+
+        /* Media queries for smaller screens */
+        @media only screen and (max-width: 768px) {
+            .container {
+                max-width: 100%;
+                padding: 10px;
+            }
+
+            input[type="text"] {
+                width: 100%;
+            }
+
+            .image-grid img {
+                max-width: 45%;
+                margin: 10px 5% 30px;
+            }
+        }
+
+        /* Media queries for even smaller screens */
+        @media only screen and (max-width: 480px) {
+            .image-grid img {
+                max-width: 90%;
+                margin: 10px 5%;
+            }
+        }
+
     </style>
     """
 
@@ -123,4 +164,5 @@ if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     debug = os.environ.get('DEBUG', True)
 
-    app.run(host='0.0.0.0', port=port, debug=debug)
+    app.run(host='0.0.0.0', port=port, debug=True)
+    # app.run(debug=True)
