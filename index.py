@@ -1,4 +1,4 @@
-from flask import Flask, request, send_from_directory, redirect
+from flask import Flask, request, redirect
 import requests
 import re
 import os
